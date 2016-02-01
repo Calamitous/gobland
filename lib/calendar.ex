@@ -28,7 +28,10 @@ defmodule Calendar do
   def set_speed(new_speed), do: GenServer.call(:calendar, {:set_speed, String.to_atom(new_speed)})
   def get_speed(), do: GenServer.call(:calendar, :get_speed)
 
-  def notify_watchers(state), do: state
+  def notify_watchers(state) do
+    Landscape.advance
+    state
+  end
 
   def advance(state, 0), do: state
   def advance(state, times), do: state |> next_minute |> advance(times - 1)

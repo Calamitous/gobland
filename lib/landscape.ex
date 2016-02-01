@@ -3,12 +3,12 @@ defmodule Landscape do
 
   def start_link, do: GenServer.start_link(__MODULE__, nil, name: :landscape)
   def start, do: GenServer.start(__MODULE__, nil, name: :landscape)
-  def init(_), do: {:ok, Landscape.build_map(50, 15)}
+  def init(_), do: {:ok, Landscape.build_map(50, 15) |> add_water}
 
-  # def handle_info(:advance, state),   do: {:noreply, advance(state)}
-
+  def handle_cast(:advance, state),   do: {:noreply, Landscape.update(state)}
   def handle_call(:display, _, map), do: {:reply, Landscape.Display.print_map(map), map}
 
+  def advance, do: GenServer.cast(:landscape, :advance)
   def display, do: GenServer.call(:landscape, :display)
 
   def make() do
@@ -17,8 +17,6 @@ defmodule Landscape do
     |> Landscape.Display.print_map
     |> Landscape.advance
   end
-
-  def add_calendar(map), do: {map, {1, :spring, 1, 8, 0, :pause}}
 
   def update(world), do: world |> Landscape.Water.flow
 

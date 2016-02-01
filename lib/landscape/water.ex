@@ -1,11 +1,11 @@
 defmodule Landscape.Water do
   # Water doesn't flow in the winter!
-  def flow({{w, h, m}, {d, :winter, y}}), do: {{w, h, m}, {d, :winter, y}}
+  # def flow({w, h, m}) when Calendar.season == :winter, do: {w, h, m}
 
-  def flow({{w, h, m}, date}) do
-    {{w, h, Enum.map(Enum.with_index(m), fn({{elev, has_water, grass}, i}) ->
+  def flow({w, h, m}) do
+    {w, h, Enum.map(Enum.with_index(m), fn({{elev, has_water, grass}, i}) ->
       {elev, has_water || should_have_water({w, h, m}, i), grass}
-    end)}, date}
+    end)}
   end
 
   defp should_have_water({w, h, m}, ele) do
