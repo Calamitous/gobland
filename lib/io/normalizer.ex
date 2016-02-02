@@ -5,6 +5,7 @@ defmodule Normalizer do
   @time  ~w(time t)
   @quit  ~w(quit q)
   @map   ~w(map m)
+  @rain  ~w(rain r)
   # @all List.flatten [@speed, @clear, @boom, @time, @quit]
 
   def normalize([command, value]) when command in @speed, do: [:speed, value]
@@ -14,6 +15,7 @@ defmodule Normalizer do
   def normalize([command])        when command in @time,  do: :time
   def normalize([command])        when command in @quit,  do: :quit
   def normalize([command])        when command in @map,   do: :map
+  def normalize([command])        when command in @rain,  do: :rain
   # def normalize(["shutdown"]), do: :shutdown
 
   def normalize(command), do: command
