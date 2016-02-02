@@ -3,8 +3,8 @@ defmodule Landscape.Water do
   # def flow({w, h, m}) when Calendar.season == :winter, do: {w, h, m}
 
   def flow({w, h, m}) do
-    {w, h, Enum.map(Enum.with_index(m), fn({{elev, has_water, grass}, i}) ->
-      {elev, has_water || should_have_water({w, h, m}, i), grass}
+    {w, h, Enum.map(Enum.with_index(m), fn({{elev, has_water, ground_cover}, i}) ->
+      {elev, has_water || should_have_water({w, h, m}, i), ground_cover}
     end)}
   end
 

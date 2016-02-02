@@ -24,7 +24,6 @@ defmodule Landscape.Display do
   def topleft(h),      do: IO.ANSI.Cursor.cursor_to(1, h)
 
   def assemble_map({w, h, m}) do
-    IO.inspect({w, h, m})
     m
     |> Enum.with_index
     |> Enum.map(fn({c, i}) -> cell_print(c, Landscape.Position.eol(w, h, i)) end)

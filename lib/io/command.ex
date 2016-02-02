@@ -12,5 +12,5 @@ defmodule Command do
 
   # def interpret(["shutdown"]), do: "Server shutting down..."
 
-  def interpret(command), do: [@command_scrubber, 'You said "', IO.ANSI.green, IO.inspect(command), IO.ANSI.reset, ?"]
+  def interpret(command), do: [@command_scrubber, 'You said "', IO.ANSI.green, command, IO.ANSI.reset, ?"]
 end

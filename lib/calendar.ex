@@ -55,7 +55,7 @@ defmodule Calendar do
   def season_string(season), do: season |> to_string |> String.capitalize
 
   def day_icon(hour) when hour >= 7 and hour < 19, do: [IO.ANSI.yellow, '☀', IO.ANSI.reset] #  '\u2600' #
-  def day_icon(_),                                do: [IO.ANSI.white, '☾', IO.ANSI.reset]
+  def day_icon(_),                                 do: [IO.ANSI.white,  '☾', IO.ANSI.reset]
 
   def season_format({_, season, _, _, _, _}), do: season
 
