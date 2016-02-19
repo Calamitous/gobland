@@ -12,6 +12,11 @@ defmodule Telnet do
 
   defp conn_id(conn), do: conn |> Port.info |> Keyword.get(:id, 0) |> Integer.to_string
 
+  def push_update(conns) do
+    map = make_response(:map)
+    Enum.each conns, fn conn -> :gen_tcp.send(conn, map) end
+  end
+
   defp listen(socket) do
     {:ok, conn} = :gen_tcp.accept(socket)
     Logger.info ["Opening socket connection #", conn_id(conn)]
