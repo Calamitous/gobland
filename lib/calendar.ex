@@ -4,7 +4,7 @@ defmodule Calendar do
   @season_length 30
   @advancement_speeds  %{:pause => 0, :minute => 1, :hour => 60, :day => 60 * 24, :season => 60 * 24 * @season_length}
 
-  def start_link, do: GenServer.start_link(__MODULE__, nil, name: :calendar)
+  # def start_link, do: GenServer.start_link(__MODULE__, nil, name: :calendar)
   def start, do: GenServer.start(__MODULE__, nil, name: :calendar)
 
   def init(_) do
@@ -49,8 +49,8 @@ defmodule Calendar do
   def next_day({y, season, d, h, m, speed}) when d >= @season_length, do: next_season({y, season, 1, h, m, speed})
   def next_day({y, season, d, h, m, speed}),                          do: {y, season, d + 1, h, m, speed}
 
-  def next_season({y, :winter, d, h, m, speed}), do: {y + 1, @season_progression[:winter], d, 0, 0, speed}
-  def next_season({y, season, d, h, m, speed}),  do: {y, @season_progression[season], d, 0, 0, speed}
+  def next_season({y, :winter, d, _, _, speed}), do: {y + 1, @season_progression[:winter], d, 0, 0, speed}
+  def next_season({y, season, d, _, _, speed}),  do: {y, @season_progression[season], d, 0, 0, speed}
 
   def season_string(season), do: season |> to_string |> String.capitalize
 

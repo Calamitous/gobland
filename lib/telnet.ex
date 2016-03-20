@@ -19,16 +19,16 @@ defmodule Telnet do
 
   defp listen(socket) do
     {:ok, conn} = :gen_tcp.accept(socket)
+    # Add to conns list here
     Logger.info ["Opening socket connection #", conn_id(conn)]
     :gen_tcp.send(conn, Display.refresh('Welcome to the server!'))
     spawn(fn -> recv(conn) end)
-    listen(socket) # For now, stop after 1 connection closes
+    listen(socket)
   end
 
   defp handle_message(conn, data) do
     command = make_command(data)
     Logger.info ["Got '", data, ?']
-    response = make_response(command)
     :gen_tcp.send(conn, make_response(command))
     loop(conn, command)
   end

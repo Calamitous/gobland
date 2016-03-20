@@ -11,6 +11,7 @@ defmodule Command do
   def interpret(:quit),  do: "Goodbye."
   def interpret(:rain),  do: [@command_scrubber, Landscape.rain]
   # def interpret(:help),  do: [@command_scrubber, Command.help]
+  # def interpret(:menu),  do: [@command_scrubber, Command.menu]
 
   # def interpret(["shutdown"]), do: "Server shutting down..."
 
