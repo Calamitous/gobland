@@ -2,9 +2,10 @@ defmodule Telnet do
   require Logger
 
   def start(port) do
+    Logger.info ['Timering...']
     Logger.info ['* Starting on port ', Integer.to_string(port), '...']
     tcp_options = [:binary, {:packet, 0}, {:active, false}]
-     check_startup :gen_tcp.listen(port, tcp_options)
+    check_startup :gen_tcp.listen(port, tcp_options)
   end
 
   def check_startup({:ok, socket}), do: listen(socket)
@@ -19,10 +20,12 @@ defmodule Telnet do
 
   defp listen(socket) do
     {:ok, conn} = :gen_tcp.accept(socket)
-    # Add to conns list here
+    GenServer.cast(:connections, {:add, conn})
+    GenServer.info(:connections, :list)
     Logger.info ["Opening socket connection #", conn_id(conn)]
     :gen_tcp.send(conn, Display.refresh('Welcome to the server!'))
     spawn(fn -> recv(conn) end)
+    # Stops after 1?
     listen(socket)
   end
 
@@ -53,6 +56,8 @@ defmodule Telnet do
 
   defp loop(conn, :quit) do
     Logger.info ["Closing socket connection #", conn_id(conn)]
+    #GenServer.cast(:connections, {:remove, conn})
+    #GenServer.cast(:connections, :list)
     :gen_tcp.close(conn)
   end
 
